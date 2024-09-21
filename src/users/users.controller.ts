@@ -1,12 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { getMessageCode } from 'src/common/utils';
 import { Request, Response } from 'express'
 import { endpoints } from 'src/common/enpoints';
-import { UserDto } from 'src/Dto/UserDto';
-
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
@@ -42,7 +39,7 @@ export class UsersController {
   //crear un usuarios
   @Post()
   @UsePipes(new ValidationPipe())
-  async createUser(@Body() user: UserDto, @Res() res: Response) {
+  async createUser(@Body() user: CreateUserDto, @Res() res: Response) {
     const Response = await this.usersService.createUser(user);
     return res.status(getMessageCode(Response?.respose).code).json({
       message: getMessageCode(Response?.respose).message,

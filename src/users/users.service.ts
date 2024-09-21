@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserDto } from 'src/Dto/UserDto';
 import { PrismaService } from 'src/primas.services';
 
 @Injectable()
@@ -15,8 +13,8 @@ export class UsersService {
     return this.prisma.user.findMany()
       .then((res) => {
         return { data: res, respose: "success" };
-      }).catch((error) => {
-        return "badRequest"
+      }).catch(() => {
+        return { data: null, respose: "badRequest" };
       })
   }
 
@@ -36,11 +34,11 @@ export class UsersService {
     return find;
   }
 
-  async createUser(user: UserDto): Promise<any> {
+  async createUser(user: CreateUserDto): Promise<any> {
     return this.prisma.user.create({ data: user })
       .then((res) => {
         return { data: res, respose: "success" };
-      }).catch((error) => {
+      }).catch(() => {
         return { data: null, respose: "badRequest" };
       })
   }
