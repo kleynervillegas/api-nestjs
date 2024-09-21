@@ -1,30 +1,17 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
-import { UserController } from './controlles/user/user.controller';
-import { UserService } from './services/user/user.service';
-import { UserEntity } from './entitys/user.entity';
-import { PaymentsModule } from './payments/payments.module';
 
+import { PaymentsModule } from './payments/payments.module';
+import { PrismaService } from './primas.services';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'api-nestjs',
-      entities: [UserEntity],
-      synchronize: true,
-    }),
     UserModule,
     PaymentsModule,
-
-
+    UsersModule,
   ],
-  controllers: [UserController],
-  providers: [UserService],
+  controllers: [],
+  providers: [PrismaService],
 })
-export class AppModule {}
+export class AppModule { }
