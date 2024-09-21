@@ -4,6 +4,7 @@ import { UserModule } from './modules/user/user.module';
 import { UserController } from './controlles/user/user.controller';
 import { UserService } from './services/user/user.service';
 import { UserEntity } from './entitys/user.entity';
+import { PaymentsModule } from './payments/payments.module';
 
 
 @Module({
@@ -19,6 +20,7 @@ import { UserEntity } from './entitys/user.entity';
       synchronize: true,
     }),
     UserModule,
+    PaymentsModule,
 
 
   ],
