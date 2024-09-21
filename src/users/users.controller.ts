@@ -4,9 +4,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { getMessageCode } from 'src/common/utils';
 import { Request, Response } from 'express'
 import { endpoints } from 'src/common/enpoints';
-@Controller('users')
+@Controller('/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
+
   //Buscar todos los usurios
   @Get()
   async getAllUser(@Req() req: Request, @Res() res: Response): Promise<any> {
@@ -17,25 +18,27 @@ export class UsersController {
     });
   }
   //Buscar un usuarios por id
-  @Get(":id")
-  getUserById(@Req() req: Request, @Res() res: Response) {
-    const id: any = req.query.id;
-    const Response = this.usersService.getUserById(id);
+  @Get("/:id")
+  async getUserById(@Req() req: Request, @Res() res: Response) {
+    const params: any = req.params.id;
+    const Response = await this.usersService.getUserById(params);
     return res.status(getMessageCode(Response.respose).code).json({
       message: getMessageCode(Response.respose).message,
       data: Response.data
     });
   }
-  //Buscar un usuarios por nombre
-  @Get(endpoints.getOneName)
-  getUserByName(@Req() req: Request, @Res() res: Response) {
-    const params: any = req.params.name;
-    const Response = this.usersService.getUserByName(params);
+
+  // //Buscar un usuarios por nombre
+  @Get(':name')
+  async getUserByName(@Req() req: Request, @Res() res: Response) {
+    const params: any = req.query.name;
+    const Response = await this.usersService.getUserByName(params);
     return res.status(getMessageCode(Response.respose).code).json({
       message: getMessageCode(Response.respose).message,
       data: Response.data
     });
   }
+
   //crear un usuarios
   @Post()
   @UsePipes(new ValidationPipe())
