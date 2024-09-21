@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res,UsePipes, ValidationPipe} from '@nestjs/common';
 import { endpoints } from 'src/common/enpoints';
 import { UserService } from 'src/services/user/user.service';
 import { Request, Response } from 'express'
-
+import { UserDto } from 'src/Dto/UserDto';
 @Controller("user/")
 export class UserController {
 
@@ -60,16 +60,15 @@ export class UserController {
     }
     //crear un usuarios
     @Post(endpoints.CreateUser)
-    createUser(@Req() req: Request, @Res() res: Response,) {
+    @UsePipes(new ValidationPipe())
+    createUser(@Body() user: UserDto, @Res() res: Response) {
         try {
-            const Response = this.userService.createUser(req.body);
-
+            const Response = this.userService.createUser(user);
             return res.status(200).json({
                 message: "Success",
                 data: Response
             });
         } catch (error) {
-
             return res.status(500).json({
                 message: "Error internal server",
                 data: []

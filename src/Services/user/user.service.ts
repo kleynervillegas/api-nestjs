@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { throwError } from 'rxjs';
+import { last, throwError } from 'rxjs';
+import { UserDto } from 'src/Dto/UserDto';
 import { UserEntity } from 'src/Entitys/user.entity';
 import { Repository } from 'typeorm';
 
@@ -31,10 +32,10 @@ export class UserService {
         return find;
     }
 
-
-    createUser(body) {
+    createUser(user:UserDto) {
         this.userData.push({
-            name: body.name,
+            name: user.name,
+            lastName:user.lastName,
             id: this.userData.length + 1
         });
         return true;
