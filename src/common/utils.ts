@@ -1,5 +1,5 @@
-export const getMessageCode = (element) => {
-    const codes = {
+export const getMessageCode = (value) => {
+    const element = {
         success:
         {
             message: 'Operación exitosa',
@@ -21,11 +21,11 @@ export const getMessageCode = (element) => {
         },
         errorServe:
         {
-            message: 'Internal Server Error',
+            message: 'Error interno del servidor',
             code: 500
 
         },
     }
-    return codes[element] ?? getMessageCode('errorServe');
+    return element[value] ?? getMessageCode('errorServe');
 }
 

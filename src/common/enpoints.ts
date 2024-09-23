@@ -1,6 +1,9 @@
 export const endpoints = {
-    allUser: "users",
-    getOne: "/:id",
-    getOneName: "users/serch",
-    CreateUser: "users"
+    //users
+    usersPath:'/users',
+    allUser: '/users',
+    getOneByid: '/users/:id',
+    getOneByName: '/serch',
+    UsersPost: '/users'
+    // end
 }
