@@ -4,7 +4,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { getMessageCode } from 'src/common/utils';
 import { Request, Response } from 'express'
 import { endpoints } from 'src/common/enpoints';
+import { ApiTags } from '@nestjs/swagger';
 @Controller()
+@ApiTags(endpoints.usersPath)
+
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
