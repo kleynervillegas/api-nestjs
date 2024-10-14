@@ -12,11 +12,17 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { getMessageCode } from 'src/common/utils';
 import { Request, Response } from 'express'
 import { endPoints } from 'src/common/enpoints';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/middleware/auth/auth.guard';
 @Controller()
 @ApiTags(endPoints.usersPath)
 @UseGuards(AuthGuard)
+@ApiHeader({
+  name: 'token',
+  description: 'Token de autenticacion',
+})
+@ApiResponse({ status: 201, description: 'Operacion exitosa' })
+@ApiResponse({ status: 401, description: 'Perfil no autorizado' })
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
