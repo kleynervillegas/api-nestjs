@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { PrismaService } from 'src/primas.services'; import * as bcrypt from 'bcrypt'; @Injectable()
+import { PrismaService } from 'src/primas.services';
+ import * as bcrypt from 'bcrypt'; 
+ @Injectable()
 export class UsersService {
 
   constructor(private prisma: PrismaService) { }
@@ -34,7 +36,6 @@ export class UsersService {
         return { data: res, respose: "success" };
       }).catch((e) => {
         console.log(e);
-
         return { data: null, respose: "badRequest" };
       })
   }
