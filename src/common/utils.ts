@@ -29,3 +29,20 @@ export const getMessageCode = (value) => {
     return element[value] ?? getMessageCode('errorServe');
 }
 
+const baseRandom = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+const random = {
+    baseRandom: baseRandom,
+    randomPassword: baseRandom+'$@.!%*?&'
+};
+
+export const generateRandomText = async (typeRandom='baseRandom', lenghtText=10) => {
+
+
+
+        return await random[typeRandom].split('').sort(() => 0.5 - Math.random()).join('').substring(0, lenghtText);
+
+    }
+
+
+

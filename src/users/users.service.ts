@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { PrismaService } from 'src/primas.services';
-import { Prisma } from '@prisma/client';
-
-@Injectable()
+import { PrismaService } from 'src/primas.services'; import * as bcrypt from 'bcrypt'; @Injectable()
 export class UsersService {
 
   constructor(private prisma: PrismaService) { }
@@ -32,21 +29,28 @@ export class UsersService {
   }
 
   async getUserByName(item: any): Promise<any> {
-    return this.prisma.user.findMany({where: {name:item.value}})
+    return this.prisma.user.findMany({ where: { name: item.value } })
       .then((res) => {
         return { data: res, respose: "success" };
       }).catch((e) => {
         console.log(e);
-        
+
         return { data: null, respose: "badRequest" };
-      }) 
+      })
   }
 
   async createUser(user: CreateUserDto): Promise<any> {
-    return this.prisma.user.create({ data: user })
+    return this.prisma.user.create({
+      data: {
+        ...user,
+        password: await bcrypt.hash(user.password, parseInt(process.env["SLAT"]))
+      }
+    })
       .then((res) => {
         return { data: res, respose: "success" };
-      }).catch(() => {
+      }).catch((error) => {
+        console.log(error);
+
         return { data: null, respose: "badRequest" };
       })
   }

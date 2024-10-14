@@ -1,13 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { getMessageCode } from 'src/common/utils';
 import { Request, Response } from 'express'
 import { endpoints } from 'src/common/enpoints';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/middleware/auth/auth.guard';
 @Controller()
 @ApiTags(endpoints.usersPath)
-
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 

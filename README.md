@@ -7,3 +7,4 @@
  # comandos par ala base de datos
 
  npx prisma init
+$ npx prisma migrate dev --name init
