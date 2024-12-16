@@ -12,28 +12,34 @@ export class LoginService {
 
   async Login(createLoginDto: CreateLoginDto): Promise<any> {
 
-    const user = await this.prisma.user.findFirst({ where: { email: createLoginDto.email } });
+    try {
 
-    if (user) {
+      const user = await this.prisma.user.findFirst({ where: { email: createLoginDto.email } });
 
-      if (await bcrypt.compare(createLoginDto.password, user.password)) {
+      if (user) {
 
-        const token = jwt.sign(
-          user,
-          process.env['JWT_KEY'],
-          { expiresIn: process.env['expires_token'] }
-        )
+        if (await bcrypt.compare(createLoginDto.password, user.password)) {
 
-        return { data: token, respose: "success" };
+          const token = jwt.sign(
+            user,
+            process.env['JWT_KEY'],
+            { expiresIn: process.env['expires_token'] }
+          )
 
+          return { data: token, respose: "success" };
+
+        } else {
+
+          return { data: null, respose: "Unauthorized" };
+
+        }
       } else {
 
-        return { data: null, respose: "Unauthorized" };
-
+        return { data: null, respose: "badRequest" };
       }
-    } else {
 
-      return { data: null, respose: "badRequest" };
+    } catch (error) {
+      return { data: null, respose: "errorServe" };
     }
   }
 }

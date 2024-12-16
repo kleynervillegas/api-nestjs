@@ -31,7 +31,7 @@ export class LoginController {
 
   async Login(@Body() body: CreateLoginDto, @Res() res: Response) {
     const Response = await this.loginService.Login(body);    
-    return res.status(getMessageCode(Response?.respose).code).json({
+    return res.status(getMessageCode(Response?.respose).code).set({ 'x-phrase': "phrase" }).json({
       message: getMessageCode(Response?.respose).message,
       data: Response.data
     });
