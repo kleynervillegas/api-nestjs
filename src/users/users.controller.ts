@@ -16,17 +16,17 @@ import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/middleware/auth/auth.guard';
 @Controller()
 @ApiTags(endPoints.usersPath)
-@UseGuards(AuthGuard)
-@ApiHeader({
-  name: 'token',
-  description: 'Token de autenticacion',
-})
 @ApiResponse({ status: 201, description: 'Operacion exitosa' })
 @ApiResponse({ status: 401, description: 'Perfil no autorizado' })
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   //Buscar todos los usurios
+  @UseGuards(AuthGuard)
+  @ApiHeader({
+    name: 'token',
+    description: 'Token de autenticacion',
+  })
   @Get(endPoints.usersPath)
   async getAllUser(@Req() req: Request, @Res() res: Response): Promise<any> {
     const Response = await this.usersService.getAllUser();
@@ -36,6 +36,11 @@ export class UsersController {
     });
   }
   //Buscar un usuarios por id
+  @UseGuards(AuthGuard)
+  @ApiHeader({
+    name: 'token',
+    description: 'Token de autenticacion',
+  })
   @Get(endPoints.getOneByid)
   async getUserById(@Req() req: Request, @Res() res: Response) {
     const params: any = req.params.id;
@@ -46,6 +51,11 @@ export class UsersController {
     });
   }
   // //Buscar un usuarios por nombre
+  @UseGuards(AuthGuard)
+  @ApiHeader({
+    name: 'token',
+    description: 'Token de autenticacion',
+  })
   @Get(endPoints.getOneByName)
   async getUserByName(@Req() req: Request, @Res() res: Response) {
     const Response = await this.usersService.getUserByName({ value: req.query.value, row: req.query.row });

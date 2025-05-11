@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
 
     let request = context.switchToHttp().getRequest();
     if (request.headers.token) {
-      const verifuc: any = jwt.verify(request.headers.token, process.env['JWT_KEY'], (error, descoded) => {
+      const verifuc: any = jwt.verify(request.headers.token, process.env.JWT_KEY, (error, descoded) => {
         if (error) {
           return false;
         } else {
