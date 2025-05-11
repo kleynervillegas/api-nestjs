@@ -20,10 +20,11 @@ export class LoginService {
 
         if (await bcrypt.compare(createLoginDto.password, user.password)) {
 
+
           const token = jwt.sign(
             user,
             process.env.JWT_KEY,
-            // { expiresIn: process.env['expires_token'] }
+            { expiresIn: Number(process.env.expires_token) }
           )
 
           return { data: token, respose: "success" };

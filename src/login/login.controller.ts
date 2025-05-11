@@ -13,14 +13,15 @@ import {
 import { LoginService } from './login.service';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { endPoints } from "../common/enpoints";
 import { Request, Response } from 'express'
 import { getMessageCode } from '../common/utils';
 
 @Controller()
 @ApiTags(endPoints.Login)
-
+@ApiResponse({ status: 201, description: 'Operacion exitosa' })
+@ApiResponse({ status: 401, description: 'Perfil no autorizado' })
 export class LoginController {
 
   constructor(private readonly loginService: LoginService) { }
