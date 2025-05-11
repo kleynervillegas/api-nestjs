@@ -22,8 +22,8 @@ export class LoginService {
 
           const token = jwt.sign(
             user,
-            process.env['JWT_KEY'],
-            { expiresIn: process.env['expires_token'] }
+            process.env.JWT_KEY,
+            // { expiresIn: process.env['expires_token'] }
           )
 
           return { data: token, respose: "success" };
